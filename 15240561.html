@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今天吃什麼？</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #fff7ed;
+    text-align: center;
+    padding: 30px 15px;
+  }
+  .container {
+    max-width: 450px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px #0001;
+  }
+  h1 { color: #d97706; }
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    height: 150px;
+    padding: 12px;
+    font-size: 17px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    resize: vertical;
+  }
+  button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    background: #d97706;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  button:hover { background: #b45309; }
+  #result {
+    margin-top: 25px;
+    padding: 20px;
+    background: #ffedd5;
+    border-radius: 12px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #92400e;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🍱 今天吃什麼？</h1>
+  <p>輸入想吃的食物，每行一個選項</p>
+
+  <textarea id="options">便當
+麵
+咖哩
+水餃</textarea>
+
+  <button onclick="draw()">🎲 幫我選！</button>
+
+  <div id="result">等待抽籤結果...</div>
+</div>
+
+<script>
+function draw() {
+  const input = document.getElementById("options").value;
+
+  // 去除空白行及前後空白
+  const cleaned = input
+    .split("\n")
+    .map(item => item.trim())
+    .filter(item => item !== "");
+
+  // 去除完全相同的重複選項
+  const options = [...new Set(cleaned)];
+
+  const result = document.getElementById("result");
+
+  // 檢查清單是否為空
+  if (options.length === 0) {
+    result.textContent = "請先輸入至少一個選項";
+    return;
+  }
+
+  // 每個有效選項具有相同機率
+  const index = Math.floor(Math.random() * options.length);
+
+  // 顯示抽籤結果
+  result.textContent = "🎉 今天吃：" + options[index];
+}
+</script>
+</body>
+</html>
